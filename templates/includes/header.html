@@ -1,0 +1,34 @@
+{% load static %}
+<header id="header">
+    <div id="header-wrap">
+      <nav class="primary-nav padding-small">
+        <div class="container">
+          <div class="row d-flex align-items-center">
+            <div class="col-lg-2 col-md-2">
+              <div class="main-logo">
+                <a href="{% url 'home' %}">
+                  <img src="{% static 'images/main-logo.png' %}" alt="logo"><!--logo-->
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-10 col-md-10">
+              <div class="navbar">
+                <div id="main-nav" class="stellarnav d-flex justify-content-end right">
+                  <ul class="menu-list">
+                      {% if user.is_authenticated %}
+                      <li>Witaj {{user.username}}&nbsp; | </li>&nbsp;
+                      <li><a href="#" class="item-anchor" data-effect="Dashboard">Profil</a></li>/
+                      <li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li> 
+                      {% else %}
+                      <li><a href="{% url 'login' %}" class="item-anchor" data-effect="Login">Logowanie</a></li>/
+                      <li><a href="{% url 'register' %}" class="item-anchor" data-effect="Register">Rejestracja</a></li> 
+                      {% endif %}          
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
