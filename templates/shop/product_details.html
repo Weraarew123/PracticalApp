@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% static "images/pobrane.png" as Bground %}
+<section class="section-content padding-y bg" style="background-image: url('{{Bground}}'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+<div class="container">
+<br>
+<!-- ============================ COMPONENT 1 ================================= -->
+<div class="card">
+	<div class="row no-gutters">
+		<aside class="col-md-6">
+<article class="gallery-wrap"> 
+	<div class="img-big-wrap">
+	   <a href="#"><img src="{{product.image.url}}"></a>
+	</div> <!-- img-big-wrap.// -->
+	
+</article> <!-- gallery-wrap .end// -->
+		</aside>
+		<main class="col-md-6 border-left">
+<form action="{% url "add_cart" product.pk %}" method="POST">
+	{% csrf_token %}
+	<article class="content-body">
+
+	<h2 class="title">{{product.name}}</h2>
+
+	<div class="mb-3"> 
+		<var class="h4" style="color: black">{{product.price}} Zł</var> 
+	</div> 
+
+	<p>{{product.description}}</p>
+          {% if sessions is not null %}
+          <hr>
+          <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                              <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  Co zawiera produkt
+                                </button>
+                              </h2>
+                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                                  <ol>
+                                                            {% for session in sessions %}
+                                                            <li>{{ session.name }}</li>
+                                                            {% endfor %}
+                                                  </ol>
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+          {% else %}
+          <h4>Produkt jest pusty. O szczegóły zapytaj na mail lub pod nr tel.</h4>
+          {% endif %}
+		<button type="submit" href="" class="btn  btn-primary"> <span class="text">Dodaj do koszyka</span></button>
+	</article> <!-- product-info-aside .// -->
+</form>
+		</main> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+<br>
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+<hr>
+{% endblock %}

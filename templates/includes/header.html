@@ -7,7 +7,7 @@
             <div class="col-lg-2 col-md-2">
               <div class="main-logo">
                 <a href="{% url 'home' %}">
-                  <img src="{% static 'images/main-logo.png' %}" alt="logo"><!--logo-->
+                  <h2>Strona główna</h2>
                 </a>
               </div>
             </div>
@@ -18,7 +18,19 @@
                       {% if user.is_authenticated %}
                       <li>Witaj {{user.username}}&nbsp; | </li>&nbsp;
                       <li><a href="#" class="item-anchor" data-effect="Dashboard">Profil</a></li>/
-                      <li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li> 
+                      <li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li>&nbsp; |&nbsp;
+                      <li>
+                        <a href="{% url "cart" %}" class="item-anchor position-relative">
+                          Koszyk
+                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {% if cart_count == 0 %} 
+                            (Pusty) 
+                            {% else %}
+                            ({{ cart_count }})
+                            {% endif %}
+                          </span>
+                        </button>
+                      </li>
                       {% else %}
                       <li><a href="{% url 'login' %}" class="item-anchor" data-effect="Login">Logowanie</a></li>/
                       <li><a href="{% url 'register' %}" class="item-anchor" data-effect="Register">Rejestracja</a></li> 
