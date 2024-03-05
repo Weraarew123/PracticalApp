@@ -4,7 +4,7 @@ from products.models import Product, Session
 
 @login_required(login_url='login')
 def shop(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(is_published=True)
     context = {
         'products':products,
     }

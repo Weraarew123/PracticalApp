@@ -2,12 +2,12 @@
 <header id="header">
     <div id="header-wrap">
       <nav class="primary-nav padding-small">
-        <div class="container">
+        <div class="container-fluid">
           <div class="row d-flex align-items-center">
             <div class="col-lg-2 col-md-2">
               <div class="main-logo">
                 <a href="{% url 'home' %}">
-                  <h2>Strona główna</h2>
+                  <h3 >Strona główna</h3>
                 </a>
               </div>
             </div>
@@ -17,22 +17,20 @@
                   <ul class="menu-list">
                       {% if user.is_authenticated %}
                       <li>Witaj {{user.username}}&nbsp; | </li>&nbsp;
-                      <li><a href="#" class="item-anchor" data-effect="Dashboard">Profil</a></li>/
+                      <li><a href="{% url "info" %}" class="item-anchor" data-effect="Dashboard">Profil</a></li><p id="divider">/</p>
                       <li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li>&nbsp; |&nbsp;
                       <li>
                         <a href="{% url "cart" %}" class="item-anchor position-relative">
                           Koszyk
-                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {% if cart_count == 0 %} 
-                            (Pusty) 
-                            {% else %}
-                            ({{ cart_count }})
-                            {% endif %}
+                          {% if cart_count > 0 %}
+                          <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
+                            {{ cart_count }}
                           </span>
-                        </button>
+                          {% endif %}
+                        </a>
                       </li>
                       {% else %}
-                      <li><a href="{% url 'login' %}" class="item-anchor" data-effect="Login">Logowanie</a></li>/
+                      <li><a href="{% url 'login' %}" class="item-anchor" data-effect="Login">Logowanie</a></li><p id="divider">/</p>
                       <li><a href="{% url 'register' %}" class="item-anchor" data-effect="Register">Rejestracja</a></li> 
                       {% endif %}          
                   </ul>
@@ -44,3 +42,13 @@
       </nav>
     </div>
   </header>
+
+<script>
+  var x = document.getElementById('divider');
+  if(window.screen.width<=768){
+    x.style.display = "none";
+  }
+  else{
+    x.style.display = "initial";
+  }
+</script>

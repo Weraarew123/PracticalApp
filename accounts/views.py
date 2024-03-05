@@ -21,9 +21,9 @@ def register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             username = email.split("@")[0]
-            if User.objects.filter(username = username).first():
-                    messages.error(request, "Istnieje już użytkownik z podaną nazwą")
-                    return redirect('register')
+            if User.objects.filter(email=email).first():
+                messages.error(request, "Istnieje już użytkownik z podanym mailem")
+                return redirect('register')
             user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
             user.is_active = False
             user.save()
@@ -51,14 +51,17 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user is not None:
-                auth.login(request,user)
-                return redirect('home')
-            else:
-                return redirect('login')
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User.objects.get(email=email)
+        if user.check_password(password):
+            auth.login(request,user)
+            return redirect('home')
+        else:
+            print(email)
+            print(password)
+            messages.error(request, "Błędny login lub hasło!")
+            return redirect('login')
         
     return render(request, 'accounts/login.html')
 
