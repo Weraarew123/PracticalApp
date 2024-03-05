@@ -16,4 +16,9 @@ urlpatterns = [
     path('courses/add_course/', views.add_course, name='add_course'),
     path('courses/edit_course/<int:pk>/', views.edit_course, name='edit_course'),
     path('courses/delete_course/<int:pk>/', views.delete_course, name='delete_course'),
+
+    #Admin sessions
+    path('courses/add_session/', views.add_session, name='add_session'),
+    path('courses/edit_session/<int:pk>/', views.edit_session, name='edit_session'),
+    path('courses/delete_session/<int:pk>/', views.delete_session, name='delete_session'),
 ]

@@ -6,7 +6,7 @@ def validate_file_extension(value):
     ext = os.path.splitext(value.name)[1]  # pobierz rozszerzenie pliku
     valid_extensions = ['.pdf', '.doc', '.docx']  # lista dozwolonych rozszerzeń
     if not ext.lower() in valid_extensions:
-        raise ValidationError('Nieprawidłowe rozszerzenie pliku. Dozwolone są jedynie pliki typu PDF, DOC i DOCX.')
+        raise ValidationError('Nieprawidłowe rozszerzenie pliku. Dozwolone są jedynie pliki typu PDF, DOC i DOCX. (dla pliku tekstowego)')
 
 
 class Product(models.Model):

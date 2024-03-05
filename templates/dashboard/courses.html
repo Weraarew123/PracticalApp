@@ -10,8 +10,10 @@
 
     <!-- Right side content -->
     <div class="col-md-9">
+      {% include 'includes/alerts.html' %}
         <h2>Wszystkie kursy</h2>
         <a href="{% url "add_course" %}" class="btn btn-dark text-light float-right mb-2">Dodaj kurs</a>
+        <a href="{% url "add_session" %}" class="btn btn-dark text-light float-right mb-2">Dodaj Sesje</a>
         <table class="table table-hover">
             <thead>
               <tr>
@@ -28,19 +30,19 @@
                 <td>{{ forloop.counter }}</td>
                 <td>{{ product.name }}</td>
                 <td>
-                  <div class="accordion" id="accordionExample">
+                  <div class="accordion" id="accordionExample{{forloop.counter}}">
                     <div class="accordion-item">
                       <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="false" aria-controls="collapseOne{{forloop.counter}}">
                           Edycja sesji
                         </button>
                           </h2>
-                          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                          <div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample{{forloop.counter}}">
                             <div class="accordion-body">
                               <ol>
                                 {% for session in sessions %}
                                 {% if session.product.pk == product.pk %}
-                                <a href="#"><li>{{ session.name }}</li></a>
+                                <li>{{ session.name }}&nbsp;<a href="{% url "edit_session" session.pk %}"><i class="fa fa-edit text-success"></i></a>&nbsp;<a href="{% url "delete_session" session.pk %}" onclick="return confirm('Na pewno chcesz usunąć ten kurs? (Usunie to wszystkie jego sesje!)')"><i class="fa fa-trash text-danger"></i></a></li>
                                 {% endif %}
                                 {% endfor %}
                               </ol>
@@ -62,5 +64,5 @@
           </table>
     </div>
 </div>
-
+<hr>
 {% endblock %}

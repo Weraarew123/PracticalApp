@@ -11,9 +11,9 @@
 
     <!-- Right side content -->
     <div class="col-md-9">
-        <h2>Dodaj nowy kurs</h2>
-        
-        <form action="{% url 'add_course' %}" method="POST" enctype="multipart/form-data">
+        <h2>Dodaj nową sesje</h2>
+        {{errors}}
+        <form action="{% url 'add_session' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form | crispy }}
             <button type="submit" class="btn btn-light">Dodaj kurs</button>

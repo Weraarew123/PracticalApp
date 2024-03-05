@@ -1,9 +1,10 @@
+from django.forms import ValidationError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from products.models import Product, Session
-from .forms import EditUserForm, ProductsForm
+from .forms import EditUserForm, ProductsForm, SessionsForm
 from django.contrib import messages
 
 @login_required(login_url='login')
@@ -88,4 +89,46 @@ def delete_course(request, pk):
         product = get_object_or_404(Product, pk=pk)
         product.delete()
         messages.success(request, 'Produkt pomyślnie usunięty')
+        return redirect('courses')
+
+
+def add_session(request):
+        errors = ''
+        if request.method == 'POST':
+                form = SessionsForm(request.POST, request.FILES)
+                if form.is_valid():
+                        product = form.save(commit=False) # temporarily saving the form
+                        product.save()
+                        messages.success(request, 'Dodano kurs')
+                        return redirect('courses')
+                else:
+                        errors = form.errors
+                        print(errors)
+        form = SessionsForm()
+        context = {
+                'form': form,
+                'errors': errors,
+        }
+        return render(request, 'dashboard/add_session.html', context)
+
+def edit_session(request, pk):
+        session = get_object_or_404(Session, pk=pk)
+        if request.method == 'POST':
+                form = SessionsForm(request.POST, request.FILES, instance=session)
+                if form.is_valid():
+                        session = form.save()
+                        session.save()
+                        messages.success(request, 'Zapisano zmiany')
+                        return redirect('courses')
+        form = SessionsForm(instance=session)
+        context = {
+                'form': form,
+                'session': session,
+        }
+        return render(request, 'dashboard/edit_session.html', context)
+
+def delete_session(request, pk):
+        session = get_object_or_404(Session, pk=pk)
+        session.delete()
+        messages.success(request, 'Sesja pomyślnie usunięta')
         return redirect('courses')
