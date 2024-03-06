@@ -13,6 +13,7 @@ def _cart_id(request):
 
 @login_required(login_url='login')
 def add_cart(request, product_id):
+    user = request.user
     product = Product.objects.get(id=product_id)
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))# get the cart using cart_id present in session
@@ -25,6 +26,7 @@ def add_cart(request, product_id):
     is_cart_item_exists = CartItem.objects.filter(product=product, cart=cart).exists()
     if is_cart_item_exists:
         cart_item = CartItem.objects.filter(product=product, cart=cart)
+        cart_item.user = user
         id =[]
         for item in cart_item:
             id.append(item.id)
@@ -32,6 +34,7 @@ def add_cart(request, product_id):
         cart_item= CartItem.objects.create(
             product=product,
             cart = cart,
+            user=user,
         )
         cart_item.save()
     return redirect('cart')

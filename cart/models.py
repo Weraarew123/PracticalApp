@@ -1,5 +1,6 @@
 from django.db import models
 from products.models import Product
+from django.contrib.auth.models import User
 
 class Cart(models.Model):
     cart_id = models.CharField(max_length=250, blank=True)
@@ -13,6 +14,7 @@ class Cart(models.Model):
     
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 

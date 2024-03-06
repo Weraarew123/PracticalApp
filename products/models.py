@@ -13,7 +13,7 @@ class Product(models.Model):
        name = models.CharField(max_length=100, verbose_name='Nazwa')
        image = models.ImageField(upload_to='media/photos/', verbose_name='Zdjęcie')
        description = models.TextField(blank=True, verbose_name='Opis')
-       price = models.IntegerField(verbose_name='Cena')
+       price = models.FloatField(verbose_name='Cena')
        is_published = models.BooleanField(default=False, verbose_name='Opublikowany')
 
        created_at = models.DateTimeField(auto_now_add=True)
