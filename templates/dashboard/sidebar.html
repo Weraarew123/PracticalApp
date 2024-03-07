@@ -4,7 +4,7 @@
               {% if perms.auth.view_user %}
               <a href="{% url 'user_data' %}" class="nav-link text-dark {% if '/user_data/' in request.path %}bg-dark text-white{% endif %}">Twoje dane</a>
               {% endif %}
-              <a href="#" class="nav-link text-dark {% if '#' in request.path %}bg-dark text-white{% endif %}">Zakupione kursy</a>
+              <a href="{% url "my_courses" %}" class="nav-link text-dark {% if '/my_courses/' in request.path %}bg-dark text-white{% endif %}">Zakupione kursy</a>
               {% if user.is_superuser %}
               <a href="{% url 'users' %}" class="nav-link text-dark {% if '/users/' in request.path %}bg-dark text-white{% endif %}">Edytuj użytkowników</a>
               {% endif %}

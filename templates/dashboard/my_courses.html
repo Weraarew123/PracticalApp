@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row conteiner mx-auto">
+    <!-- Left sidebar -->
+    <!-- load the sidebar here -->
+    {% include 'dashboard/sidebar.html' %}
+
+    <!-- Right side content -->
+    <div class="col-md-9">
+      {% include 'includes/alerts.html' %}
+        <h2>Moje kursy</h2>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tytuł</th>
+              </tr>
+            </thead>
+            <tbody>
+          {% for order in orders %}
+              <tr>     
+                <td>{{forloop.counter}}</td>
+                <td><a href="{% url "my_course_details" order.product.pk %}">{{ order.product.name }}</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+<hr>
+{% endblock %}

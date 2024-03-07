@@ -1,7 +1,9 @@
 from django.forms import ValidationError
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from orders.models import OrderProduct
 
 from products.models import Product, Session
 from .forms import EditUserForm, ProductsForm, SessionsForm
@@ -132,3 +134,20 @@ def delete_session(request, pk):
         session.delete()
         messages.success(request, 'Sesja pomyślnie usunięta')
         return redirect('courses')
+
+def my_courses(request):
+        user = request.user
+        orders = OrderProduct.objects.filter(user=user, ordered=True)
+        context = {
+                'orders':orders,
+        }
+        return render(request, 'dashboard/my_courses.html', context)
+
+def my_course_details(request, pk):
+        product = Product.objects.get(pk=pk)
+        sessions = Session.objects.filter(product=product)
+        context = {
+                'product':product,
+                'sessions':sessions,
+        }
+        return render(request, 'dashboard/my_course_details.html', context)
