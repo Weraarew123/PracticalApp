@@ -92,7 +92,7 @@
 		return cookieValue;
 	        }
 	        var amount = parseFloat({{ grand_total }});
-	        var url = "{% url 'order' %}";
+	        var url = "{% url 'payments' %}";
 	        var csrfToken = getCookie('csrftoken');
 	        var orderId = "{{order.order_number}}";
 	        var payment_method = 'PayPal';
@@ -100,7 +100,6 @@
 	        paypal.Buttons({
 
 		style: {
-		  color: 'blue',
 		  shape: 'rect',
 		  label: 'pay',
 		  height: 40

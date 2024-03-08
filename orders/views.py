@@ -8,55 +8,50 @@ from products.models import Product
 from .models import Order, OrderProduct, Payment
 
 def payments(request):
-        body = json.loads(request.body)
-        order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
-        
-        #Store transaction details inside Payment model
-        payment = Payment(
-                user=request.user,
-                payment_id = body['transID'],
-                payment_method = body['payment_method'],
-                amount_paid = order.order_total,
-                status = body['status'],
-        )
-        payment.save()
-        order.payment = payment
-        order.is_ordered = True
-        order.save()
+        if request.method == "POST":
 
-        #Move the cart items to Order Product table
-        cart_items = CartItem.objects.filter(user=request.user)
+                body_unicode = request.body.decode('utf-8')
+                body = json.loads(body_unicode)
+                order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
+                
+                #Store transaction details inside Payment model
+                payment = Payment(
+                        user=request.user,
+                        payment_id = body['transID'],
+                        payment_method = body['payment_method'],
+                        amount_paid = order.order_total,
+                        status = body['status'],
+                )
+                payment.save()
+                order.payment = payment
+                order.is_ordered = True
+                order.save()
 
-        for item in cart_items:
-                orderproduct = OrderProduct()
-                orderproduct.order_id = order.pk
-                orderproduct.payment = payment
-                orderproduct.user_id = request.user.id
-                orderproduct.product_id = item.product_id
-                orderproduct.prdouct_price = item.product.price
-                orderproduct.ordered = True
-                orderproduct.save()
+                #Move the cart items to Order Product table
+                cart_items = CartItem.objects.filter(user=request.user)
 
-                cart_item = CartItem.objects.get(id=item.id)
-                product_variation = cart_item.variations.all()
-                orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+                for item in cart_items:
+                        orderproduct = OrderProduct()
+                        orderproduct.order_id = order.pk
+                        orderproduct.payment = payment
+                        orderproduct.user_id = request.user.id
+                        orderproduct.product_id = item.product_id
+                        orderproduct.prdouct_price = item.product.price
+                        orderproduct.ordered = True
+                        orderproduct.save()
+                        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+                        orderproduct.save()
 
-                orderproduct.variation.set(product_variation)
-                orderproduct.save()
-
-                #Reduce the quantity of the sold products
-                product = Product.objects.get(id=item.product_id)
-                product.stock -= item.quantity
-                product.save()
-
-        #Clear cart
-        CartItem.objects.filter(user=request.user).delete()
-        #Send order number and transaction id back to sendData method via JsonResponse
-        data = {
-                'order_number': order.order_number,
-                'transID': payment.payment_id,
-        }
-        return JsonResponse(data)
+                #Clear cart
+                CartItem.objects.filter(user=request.user).delete()
+                #Send order number and transaction id back to sendData method via JsonResponse
+                data = {
+                        'order_number': order.order_number,
+                        'transID': payment.payment_id,
+                }
+                return JsonResponse(data)
+        else:
+                return JsonResponse({'error' : 'Invalid request method'})
 
 def order(request, total=0):
           user = request.user
@@ -108,7 +103,7 @@ def order_complete(request):
 
                 subtotal = 0
                 for i in ordered_products:
-                        subtotal+=i.product_price * i.quantity
+                        subtotal+=i.prdouct_price
 
                 payment = Payment.objects.get(payment_id=transID)
                 context = {
@@ -119,6 +114,6 @@ def order_complete(request):
                         'payment': payment,
                         'subtotal':subtotal,
                 }
-                return render(request, 'orders/order_complete.html', context)
+                return render(request, 'payments/order_complete.html', context)
         except (Payment.DoesNotExist, Order.DoesNotExist):
                 return redirect('home')
