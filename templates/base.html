@@ -31,6 +31,10 @@
         list-style: none;
         font-weight: bold;
       }
+      @media print
+      {
+      iframe {display:none;}
+      }
     </style>
   </head>
   <body>
@@ -49,5 +53,50 @@
 <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
 <script src="{% static 'js/plugins.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
+<script>
+/*  // Disable right-click
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+function ctrlShiftKey(e, keyCode) {
+  return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+}
+
+document.onkeydown = (e) => {
+  // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+  if (
+    event.keyCode === 123 ||
+    ctrlShiftKey(e, 'I') ||
+    ctrlShiftKey(e, 'J') ||
+    ctrlShiftKey(e, 'C') ||
+    (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+  )
+    return false;
+};*/
+
+videos = document.querySelectorAll("video");
+for (var i = 0, l = videos.length; i < l; i++) {
+    var video = videos[i];
+    var src = video.src || (function () {
+        var sources = video.querySelectorAll("source");
+        for (var j = 0, sl = sources.length; j < sl; j++) {
+            var source = sources[j];
+            var type = source.type;
+            var isMp4 = type.indexOf("mp4") != -1;
+            if (isMp4) return source.src;
+        }
+        return null;
+    })();
+    if (src) {
+        var isYoutube = src && src.match(/(?:youtu|youtube)(?:\.com|\.be)\/([\w\W]+)/i);
+        if (isYoutube) {
+            var id = isYoutube[1].match(/watch\?v=|[\w\W]+/gi);
+            id = (id.length > 1) ? id.splice(1) : id;
+            id = id.toString();
+            var mp4url = "http://www.youtubeinmp4.com/redirect.php?video=";
+            video.src = mp4url + id;
+        }
+    }
+}
+</script>
 </body>
 </html>

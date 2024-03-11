@@ -58,8 +58,6 @@ def login(request):
             auth.login(request,user)
             return redirect('home')
         else:
-            print(email)
-            print(password)
             messages.error(request, "Błędny login lub hasło!")
             return redirect('login')
         

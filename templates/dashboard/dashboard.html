@@ -14,7 +14,24 @@
                 <div class="card border-default mb-3">
                     <div class="card-header text-center text-uppercase font-weight-bold">Ostatnie zamówienia</div>
                     <div class="card-body text-dark">
-                        <h5 class="card-title text-center">Brak</h5>
+                        <table>
+                            <tr>
+                              <th>Numer Zamówienia</th>
+                              <th>Numer Płatności</th>
+                              <th>Produkt</th>
+                              <th>Koszt</th>
+                              <th>Ostatnia aktualizacja</th>
+                            </tr>
+                            {% for order in orders %}
+                            <tr>
+                              <td>{{order.order.order_number}}</td>
+                              <td>{{order.payment.payment_id}}</td>
+                              <td>{{order.product.name}}</td>
+                              <td>{{order.prdouct_price}}zł+VAT</td>
+                              <td>{{order.upadated_at}}</td>
+                            </tr>
+                            {% endfor %}                 
+                    </table>
                     </div>
                 </div>
             </div>

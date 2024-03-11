@@ -23,17 +23,15 @@
       <div class="row">
 
         <section id="selling-products" class="col-md-9 product-store">
-          <div class="container">
-            <ul class="tabs list-unstyled">
-              <li data-tab-target="#all" class="active tab">Wszystko</li>
-            </ul>
+          <div class="container-fluid">
             <div class="tab-content">
               <div id="all" data-tab-content class="active">
                 <div class="row d-flex flex-wrap">
+                  {% if products %}
                   {% for product in products %}
                   <div class="product-item col-lg-4 col-md-6 col-sm-6">
                     <div class="image-holder">
-                      <a href="{% url 'product_details' product.pk %}"><img src="..{{product.image.url}}" alt="Books" class="product-image"></a>
+                      <a href="{% url 'product_details' product.pk %}"><img src="..{{product.image.url}}" alt="{{product.name}}" class="product-image"></a>
                     </div>
                     <div class="product-detail">
                       <h3 class="product-title">
@@ -43,6 +41,12 @@
                     </div>
                   </div>
                   {% endfor %}
+                  {% else %}
+                  <div class="container mx-auto text-center">
+                    <h3>Wykupiłeś wszystkie produkty!</h3>
+                    <p>Sprawdź swój profil</p>
+                  </div>
+                  {% endif %}
                 </div>
               </div>
             </div>

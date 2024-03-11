@@ -11,7 +11,12 @@ from django.contrib import messages
 
 @login_required(login_url='login')
 def info(request):
-          return render(request, 'dashboard/dashboard.html')
+        user = request.user
+        orders = OrderProduct.objects.filter(user=user).order_by('-upadated_at')[:10]
+        context = {
+                'orders':orders,
+        }  
+        return render(request, 'dashboard/dashboard.html', context)
 
 def user_data(request):
           return render(request, 'dashboard/user_data.html')
