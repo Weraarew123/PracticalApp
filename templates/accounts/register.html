@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block content %}
-<section class="section-content padding-y" style="background-color: aliceblue">
+<section class="section-content padding-y bg-secondary-subtle">
     <!-- ============================ COMPONENT REGISTER   ================================= -->
     <br>
-    <div class="card mx-auto" style="max-width: 800px; margin-top: 40px; background-color: azure; margin: 0 auto; padding: 5px">
+    <div class="card mx-auto rounded-4" style="max-width: 800px; margin-top: 40px; padding: 5px">
         <article class="card-body">
             {% include 'includes/alerts.html' %}
             <header class="mb-4">
-                <h4 class="card-title">Zarejestruj się</h4>
+                <h3 class="card-title text-center">Zarejestruj się</h3>
             </header>
             <form action="{% url 'register' %}" method="POST">
                 {% csrf_token %}
@@ -40,7 +40,7 @@
                     </div> <!-- form-group end.// -->
                 </div>
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-light btn-block"> Zarejestruj się </button>
+                    <button type="submit" class="btn btn-light border border-black"> Zarejestruj się </button>
                 </div> <!-- form-group// -->
                 {{ form.email.errors }}
                 {{ form.non_field_errors }}
@@ -57,4 +57,5 @@
     <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 
 </section>
+<br>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block content %}
 {% static "images/pobrane.png" as Bground %}
 <section class="section-content padding-y bg" style="background-image: url('{{Bground}}'); background-repeat: no-repeat; background-size: cover; background-position: center;">
-<div class="container">
+<div class="container-fluid">
 <br>
 <!-- ============================ COMPONENT 1 ================================= -->
 <div class="card">
@@ -11,7 +11,7 @@
 		<aside class="col-md-6">
 <article class="gallery-wrap"> 
 	<div class="img-big-wrap">
-	   <a href="#"><img src="{{product.image.url}}"></a>
+	   <img src="{{product.image.url}}">
 	</div> <!-- img-big-wrap.// -->
 	
 </article> <!-- gallery-wrap .end// -->
@@ -24,7 +24,7 @@
 	<h2 class="title">{{product.name}}</h2>
 
 	<div class="mb-3"> 
-		<var class="h4" style="color: black">{{product.price}} Zł</var> 
+		<var class="h4" style="color: black">{{product.price}} zł</var> 
 	</div> 
 
 	<p>{{product.description}}</p>
@@ -51,7 +51,7 @@
           {% else %}
           <h4>Produkt jest pusty. O szczegóły zapytaj na mail lub pod nr tel.</h4>
           {% endif %}
-		<button type="submit" href="" class="btn  btn-primary"> <span class="text">Dodaj do koszyka</span></button>
+		<button type="submit" class="btn btn-light mx-auto border border-black"> <span class="text">Dodaj do koszyka</span></button>
 	</article> <!-- product-info-aside .// -->
 </form>
 		</main> <!-- col.// -->
@@ -64,5 +64,5 @@
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
-<hr>
+<br>
 {% endblock %}

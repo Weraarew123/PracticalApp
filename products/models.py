@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 def validate_file_extension(value):
     import os
@@ -29,7 +30,7 @@ class Product(models.Model):
 class Session(models.Model):
           name = models.CharField(max_length=150, verbose_name='Nazwa')
           image = models.ImageField(upload_to='media/photos/', verbose_name='Zdjęcie')
-          film = models.URLField(verbose_name='Link do filmu')
+          film = models.FileField(verbose_name='Film', upload_to='videos_uploaded', null=True, validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
           file = models.FileField(validators=[validate_file_extension], verbose_name='Plik tekstowy')
           product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Produkt')
 

@@ -8,43 +8,43 @@
 
     <!-- Right side content -->
     <div class="col">
-          <h4>Produkt: {{product.name}}</h4>
-          <img src="{{product.image.url}}" alt="zdjęcie produktu" style="max-width: 200px">
-          <hr>
-          <h5>Sesje:</h5>
-          {% if sessions is not null %}
-          {% for session in sessions %}
-          <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                              <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        {{ session.name }}
-                                </button>
-                              </h2>
-                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                                  <ol>
-                                                            <li>
-                                                                      <h6>Zdjęicie: </h6>
-                                                                      <img src="{{session.image.url}}" alt="zdjęcie produktu" style="max-width: 200px">
-                                                                      <h6>Film: </h6>
-                                                                      <video width="320" height="240" controls>
-                                                                        <source src="{{session.film}}" type="video/mp4">
-                                                                        Your browser does not support the video tag.
-                                                                      </video>
-                                                                      <h6>Plik do filmu: </h6>
-                                                                      <iframe src="{{session.file.url}}" style="width:600px; height:500px;" frameborder="0"></iframe>
-                                                            </li>
-                                                            
-                                                  </ol>
-                                        </div>
-                              </div>
-                    </div>
+      <h4>Produkt: {{product.name}}</h4>
+      <img src="{{product.image.url}}" alt="zdjęcie produktu" style="max-width: 200px">
+      <hr>
+      <h5>Sesje:</h5>
+      {% if sessions is not null %}
+      {% for session in sessions %}
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    {{ session.name }}
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <ol>
+                <li>
+                  <h6>Zdjęicie: </h6>
+                  <img src="{{session.image.url}}" alt="zdjęcie produktu" style="max-width: 200px">
+                  <h6>Film: </h6>
+                  <video width="320" height="240" controls preload="auto">
+                    <source src="{{session.film.url}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <h6>Plik do filmu: </h6>
+                  <iframe src="{{session.file.url}}" style="width:600px; height:500px;" frameborder="0" allowfullscreen></iframe>
+                </li>
+                        
+              </ol>
+            </div>
           </div>
-          {% endfor %}
-          {% else %}
-          <h4>Produkt jest pusty. O szczegóły zapytaj na mail lub pod nr tel.</h4>
-          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <h4>Produkt jest pusty. O szczegóły zapytaj na mail lub pod nr tel.</h4>
+      {% endif %}
 
     </div>
 </div>

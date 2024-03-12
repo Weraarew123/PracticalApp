@@ -10,6 +10,7 @@
     <div class="col-md-9">
       {% include 'includes/alerts.html' %}
         <h2>Moje kursy</h2>
+        {% if orders %}
         <table class="table table-hover">
             <thead>
               <tr>
@@ -26,6 +27,9 @@
               {% endfor %}
             </tbody>
           </table>
+          {% else %}
+          <div class="mx-auto text-center"><h5>Nie masz zakupionego ani jednego kursu.</h5> <a href="{% url 'shop' %}">Przejdź do sklepu</a>, aby zamówić kurs.</div>
+          {% endif %}
     </div>
 </div>
 <hr>

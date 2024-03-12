@@ -4,21 +4,21 @@
       <nav class="primary-nav padding-small">
         <div class="container-fluid">
           <div class="row d-flex align-items-center">
-            <div class="col-lg-2 col-md-2">
+            <div class="col col-lg-2 col-md-2">
               <div class="main-logo">
                 <a href="{% url 'home' %}">
                   <h3 >Strona główna</h3>
                 </a>
               </div>
             </div>
-            <div class="col-lg-10 col-md-10">
+            <div class="col col-lg-10 col-md-10">
               <div class="navbar">
                 <div id="main-nav" class="stellarnav d-flex justify-content-end">
                   <ul class="menu-list">
                       {% if user.is_authenticated %}
-                      <li>Witaj {{user.username}}&nbsp; | </li>&nbsp;
-                      <li><a href="{% url "info" %}" class="item-anchor" data-effect="Dashboard">Profil</a></li><p id="divider">/</p>
-                      <li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li>&nbsp; |&nbsp;
+                      <li>Witaj {{user.username}}&nbsp;<p class="divider"> | </p></li>&nbsp;
+                      <li><a href="{% url "info" %}" class="item-anchor" data-effect="Dashboard">Profil</a></li><p class="divider">/</p>
+                      <li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li>&nbsp;<p class="divider">|</p>&nbsp;
                       <li>
                         <a href="{% url "cart" %}" class="item-anchor position-relative">
                           Koszyk
@@ -30,7 +30,7 @@
                         </a>
                       </li>
                       {% else %}
-                      <li><a href="{% url 'login' %}" class="item-anchor" data-effect="Login">Logowanie</a></li><p id="divider">/</p>
+                      <li><a href="{% url 'login' %}" class="item-anchor" data-effect="Login">Logowanie</a></li><p class="divider">/</p>
                       <li><a href="{% url 'register' %}" class="item-anchor" data-effect="Register">Rejestracja</a></li> 
                       {% endif %}          
                   </ul>
@@ -42,13 +42,3 @@
       </nav>
     </div>
   </header>
-
-<script>
-  var x = document.getElementById('divider');
-  if(window.screen.width<=768){
-    x.style.display = "none";
-  }
-  else{
-    x.style.display = "initial";
-  }
-</script>

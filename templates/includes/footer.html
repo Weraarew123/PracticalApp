@@ -22,12 +22,32 @@
           </p>
         </div>
         <div class="payment-method">
-          <p>Opcje płatności :</p>
+          <p>Opcje płatności :</p>&nbsp;
           <div class="card-wrap">
-            <img src="{% static 'images/visa-icon.jpg' %}" alt="visa">
-            <img src="{% static 'images/mastercard.png' %}" alt="mastercard">
+            <img src="{% static 'images\Przelewy24_logo.png' %}" alt="przelewy24" style="max-width:100px">
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    var dividers = document.getElementsByClassName('divider');
+  
+    function toggleDividers() {
+      for (var i = 0; i < dividers.length; i++) {
+        if (window.innerWidth <= 768) {
+          dividers[i].style.display = "none";
+        } else {
+          dividers[i].style.display = "initial";
+        }
+      }
+    }
+  
+    // Wywołaj funkcję po załadowaniu strony
+    toggleDividers();
+  
+    // Dodaj nasłuchiwanie na zdarzenie zmiany rozmiaru okna
+    window.addEventListener('resize', function() {
+      toggleDividers();
+    });
+  </script>

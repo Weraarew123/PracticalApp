@@ -14,6 +14,7 @@
                 <div class="card border-default mb-3">
                     <div class="card-header text-center text-uppercase font-weight-bold">Ostatnie zamówienia</div>
                     <div class="card-body text-dark">
+                        {% if orders %}
                         <table>
                             <tr>
                               <th>Numer Zamówienia</th>
@@ -32,6 +33,9 @@
                             </tr>
                             {% endfor %}                 
                     </table>
+                    {% else %}
+                    <h4 class="mx-auto text-center">Brak</h4>
+                    {% endif %}
                     </div>
                 </div>
             </div>
