@@ -7,9 +7,9 @@
     <!-- Left sidebar -->
     <!-- load the sidebar here -->
     {% include 'dashboard/sidebar.html' %}
-
     <!-- Right side content -->
     <div class="col-md-9">
+      {% if user.is_staff %}
       {% include 'includes/alerts.html' %}
         <h2>Wszystkie kursy</h2>
         <a href="{% url "add_course" %}" class="btn btn-dark text-light float-right mb-2">Dodaj kurs</a>
@@ -62,6 +62,9 @@
               
             </tbody>
           </table>
+          {% else %}
+    <h5>Nie masz uprawnień do przeglądania tej strony</h5>
+    {% endif %}
     </div>
 </div>
 <hr>

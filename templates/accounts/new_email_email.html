@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+Witaj {{user.first_name}},
+
+Proszę kliknąć w poniższy link aby zaakceptować zmianę maila.
+http://{{domain}}{% url "change_email_validation" uidb64=uid token=token email=email %}
+
+Jeśli to nie ty, zignoruj tego maila.
+
+{% endautoescape %}

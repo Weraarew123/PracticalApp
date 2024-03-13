@@ -64,7 +64,7 @@ def login(request):
     return render(request, 'accounts/login.html')
 
 
-@login_required(login_url='login')
+@login_required
 def logout(request):
     auth.logout(request)
     return redirect('home')
@@ -143,3 +143,60 @@ def resetPassword(request):
             messages.error(request, 'Hasła się nie zgadzają!')
             return redirect('resetPassword')
     return render(request, 'accounts/resetPassword.html')
+
+@login_required
+def change_email(request):
+    user = request.user
+    if request.method == "POST":
+        password = request.POST['password']
+        email = user.email
+        user_object = User.objects.get(email=email)
+        user_exists = user_object.check_password(password)
+
+        if user_exists:
+            return redirect('new_email')
+        else:
+            messages.error(request, 'Błędne hasło!')
+            return redirect('change_email')
+    return render(request, 'accounts/change_email.html')
+
+def change_email_validation(request, uidb64, token, email):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+        email=email
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.email = email
+        user.save()
+        messages.success(request, 'Zmiana maila zakończona sukcesem')
+        return redirect('user_data')
+    else:
+        messages.error(request, 'Link wygasł. Mail został nie zmieniony')
+        return redirect('user_data')
+        
+
+def new_email(request):
+    user = request.user
+    if request.method == 'POST':
+        email = request.POST['email']
+        confirm_email = request.POST['confirm_email']
+        if email == confirm_email:
+            current_site = get_current_site(request)
+            mail_subject = 'Please Potwierdzić zmianę maila'
+            message = render_to_string('accounts/new_email_email.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+                'email': email,
+            })
+            to_email = email
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            send_email.send()
+
+            messages.success(request, 'Aby dokończyć zmianę maila, sprawdź pocztę nowego maila')
+            return redirect('user_data')
+    return render(request, 'accounts/new_email.html')

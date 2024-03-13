@@ -11,7 +11,7 @@
 
     <!-- Right side content -->
     <div class="col-md-9">
-        {% if perms.auth.add_user %}
+        {% if user.is_staff %}
         <h2>Edytuj Użytkownika</h2>
         
         <form action="{% url "edit_user" user.pk %}" method="POST" >

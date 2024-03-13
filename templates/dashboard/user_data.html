@@ -4,9 +4,10 @@
 <div class="row container mx-auto">
           {% include 'dashboard/sidebar.html' %}
           <div class="col-md-9">
+                    {% include 'includes/alerts.html' %}
                     <h3 class="text-center">Dane użytkownika</h3>
                     <b>Login: </b>{{user.username}}<br>
-                    <b>E-mail: </b>{{user.email}}<br>
+                    <b>E-mail: </b>{{user.email}} <a href="{% url "change_email" %}">(zmień adres e-mail)</a><br>
                     <b>Admin: </b>{% if user.is_staff %}Tak{% else %}Nie{% endif %}
           </div>
 </div>

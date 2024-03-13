@@ -11,7 +11,7 @@
     <!-- Right side content -->
     <div class="col-md-9">
       {% include 'includes/alerts.html' %}
-      {% if perms.auth.view_user %}
+      {% if user.is_staff %}
         <h2>Wszyscy Użytkownicy</h2>
         <table class="table table-hover">
             <thead>
@@ -27,19 +27,23 @@
               </tr>
             </thead>
             <tbody>
-            {% for user in users %}
+            {% for man in users %}
               <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ user.first_name }} {{ user.last_name }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{% if user.is_active %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
-                <td>{% if user.is_staff %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
-                <td>{% if user.is_superuser %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                <td>{{ man.first_name }} {{ man.last_name }}</td>
+                <td>{{ man.username }}</td>
+                <td>{{ man.email }}</td>
+                <td>{% if man.is_active %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                <td>{% if man.is_staff %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                <td>{% if man.is_superuser %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
                 <td>
-                    <a href="{% url "edit_user" user.pk %}"><i class="fa fa-edit text-success"></i></a>
+                    {% if man.is_staff and user.is_superuser or not man.is_staff or man == user %}
+                    <a href="{% url "edit_user" man.pk %}"><i class="fa fa-edit text-success"></i></a>
                     &nbsp;
-                    <a href="{% url "delete_user" user.pk %}" onclick="return confirm('Na pewno chcesz usunąć tego użytkownika?')"><i class="fa fa-trash text-danger"></i></a>
+                    <a href="{% url "delete_user" man.pk %}" onclick="return confirm('Na pewno chcesz usunąć tego użytkownika?')"><i class="fa fa-trash text-danger"></i></a>
+                    {% else %}
+                    Brak uprawnień do edycji
+                    {% endif %}
                 </td>
               </tr>
             {% endfor %}
@@ -47,7 +51,7 @@
             </tbody>
           </table>
           {% else %}
-          <h5>You do not have permission to view this page</h5>
+          <h5>Nie masz uprawnień do przeglądania tej strony</h5>
         {% endif %}
     </div>
 </div>

@@ -1,14 +1,10 @@
 <div class="col-md-3">
           <div class="nav flex-column nav-pills bg-light" aria-orientation="vertical">
               <a href="{% url 'info' %}" class="nav-link text-dark {% if '/info/' in request.path %}bg-dark text-white{% endif %}">Zamówienia</a>
-              {% if perms.auth.view_user %}
               <a href="{% url 'user_data' %}" class="nav-link text-dark {% if '/user_data/' in request.path %}bg-dark text-white{% endif %}">Twoje dane</a>
-              {% endif %}
               <a href="{% url "my_courses" %}" class="nav-link text-dark {% if '/my_courses/' in request.path %}bg-dark text-white{% endif %}">Zakupione kursy</a>
-              {% if user.is_superuser %}
-              <a href="{% url 'users' %}" class="nav-link text-dark {% if '/users/' in request.path %}bg-dark text-white{% endif %}">Edytuj użytkowników</a>
-              {% endif %}
               {% if user.is_staff %}
+              <a href="{% url 'users' %}" class="nav-link text-dark {% if '/users/' in request.path %}bg-dark text-white{% endif %}">Edytuj użytkowników</a>   
               <a href="{% url "courses" %}" class="nav-link text-dark {% if '/courses/' in request.path %}bg-dark text-white{% endif %}">Edytuj kursy</a>
               {% endif %}
               <a href="{% url 'logout' %}" class="nav-link text-dark">Wyloguj się</a>
