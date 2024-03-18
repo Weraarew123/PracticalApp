@@ -13,7 +13,7 @@ def _cart_id(request):
     return cart
 
 class AddCartView(LoginRequiredMixin, View):
-    def get(self, request, product_id):
+    def post(self, request, product_id):
         user = request.user
         product = Product.objects.get(id=product_id)
         try:
@@ -41,7 +41,7 @@ class AddCartView(LoginRequiredMixin, View):
         return redirect('cart')
 
 class CartView(LoginRequiredMixin, View):
-    def get(self, request, total=0, cart_item=None):
+    def get(self, request, total=0, cart_items=None):
         try:
             tax=0
             grand_total=0
