@@ -81,10 +81,10 @@ class ActivateView(View):
         if user is not None and default_token_generator.check_token(user, token):
             user.is_active = True
             user.save()
-            messages.success(request, 'Congratulations! Your account is activated.')
+            messages.success(request, 'Twoje konto zostało aktywowane.')
             return redirect('login')
         else:
-            messages.error(request, 'Invalid activation link!')
+            messages.error(request, 'Błędny link aktywacyjny!')
             return redirect('register')
     
 
