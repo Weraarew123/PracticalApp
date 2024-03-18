@@ -69,6 +69,6 @@ class RemoveCartView(LoginRequiredMixin, View):
         try:
             cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
             cart_item.delete()
-        except:
+        except CartItem.DoesNotExist:
             pass
         return redirect('cart')
