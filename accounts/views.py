@@ -98,7 +98,7 @@ class ForgotPasswordView(View):
 
             #RESET PASSWORD EMAIL
             current_site = get_current_site(request)
-            mail_subject = 'Please reset you password'
+            mail_subject = 'Proszę zresetować hasło'
             message = render_to_string('accounts/reset_password_email.html', {
                 'user': user,
                 'domain': current_site,

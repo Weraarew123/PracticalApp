@@ -18,7 +18,8 @@
                       {% if user.is_authenticated %}
                       <li>Witaj {{user.username}}&nbsp;<p class="divider"> | </p></li>&nbsp;
                       <li><a href="{% url "info" %}" class="item-anchor" data-effect="Dashboard">Profil</a></li><p class="divider">/</p>
-                      <li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li>&nbsp;<p class="divider">|</p>&nbsp;
+                      <li><a href="{% url "logout" %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li>&nbsp;<p class="divider">|</p>&nbsp;
+                      <!--<li><a href="{% url 'logout' %}" class="item-anchor" data-effect="Logout">Wyloguj się</a></li>&nbsp;<p class="divider">|</p>&nbsp;-->
                       <li>
                         <a href="{% url "cart" %}" class="item-anchor position-relative">
                           Koszyk
