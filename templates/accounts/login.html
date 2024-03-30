@@ -24,7 +24,7 @@
           </div> 
           <div class="form-group">
 		<input id="password" type="password" class="form-control" placeholder="Hasło" name="password">
-          <input type="checkbox" onclick="myFunction()"> Pokaż hasło
+          <input type="checkbox" onclick="showPassword()"> Pokaż hasło
           </div>         
           <div class="form-group">
           	<a href="{% url 'forgotPassword' %}" class="float-right">Zapomniałeś hasła?</a>           
@@ -40,7 +40,7 @@
      <br><br>
 </section>
 <script>
-     function myFunction() {
+     function showPassword() {
           var x = document.getElementById("password");
           if (x.type === "password") {
             x.type = "text";

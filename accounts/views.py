@@ -8,6 +8,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 
@@ -67,7 +68,7 @@ class LoginView(View):
 
 class LogoutView(View):
     def get(self, request):
-        auth.logout(request)
+        logout(request)
         return redirect('home')
 
 class ActivateView(View):
@@ -76,16 +77,13 @@ class ActivateView(View):
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User._default_manager.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-        
-        if user is not None and default_token_generator.check_token(user, token):
-            user.is_active = True
-            user.save()
-            messages.success(request, 'Twoje konto zostało aktywowane.')
-            return redirect('login')
-        else:
             messages.error(request, 'Błędny link aktywacyjny!')
             return redirect('register')
+        
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Twoje konto zostało aktywowane.')
+        return redirect('login')
     
 
 class ForgotPasswordView(View):
@@ -122,15 +120,12 @@ class ResetPasswordValidateView(View):
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User._default_manager.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-
-        if user is not None and default_token_generator.check_token(user, token):
-            request.session['uid'] = uid
-            messages.success(request, 'Proszę zresetować hasło')
-            return redirect('resetPassword')
-        else:
             messages.error(request, 'Link już nie działa')
             return redirect('login')
+
+        request.session['uid'] = uid
+        messages.success(request, 'Proszę zresetować hasło')
+        return redirect('resetPassword')
     
 class ResetPasswordView(View):
     def get(self, request):
@@ -172,16 +167,14 @@ class ChangeEmailValidationView(View):
             user = User._default_manager.get(pk=uid)
             email=email
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-
-        if user is not None and default_token_generator.check_token(user, token):
-            user.email = email
-            user.save()
-            messages.success(request, 'Zmiana maila zakończona sukcesem')
-            return redirect('user_data')
-        else:
             messages.error(request, 'Link wygasł. Mail został nie zmieniony')
             return redirect('user_data')
+        
+        user.email = email
+        user.save()
+        messages.success(request, 'Zmiana maila zakończona sukcesem')
+        return redirect('user_data')
+            
         
 class NewEmailView(LoginRequiredMixin, View):
     def get(self, request):
