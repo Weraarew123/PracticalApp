@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
-from ckeditor.fields import RichTextField
 
 def validate_file_extension(value):
     import os
@@ -14,7 +13,7 @@ def validate_file_extension(value):
 class Product(models.Model):
        name = models.CharField(max_length=100, verbose_name='Nazwa')
        image = models.ImageField(upload_to='media/photos/', verbose_name='Zdjęcie')
-       description = RichTextField(blank=True, verbose_name='Opis')
+       description = models.TextField(blank=True, verbose_name='Opis')
        price = models.FloatField(verbose_name='Cena')
        is_published = models.BooleanField(default=False, verbose_name='Opublikowany')
 
@@ -29,18 +28,18 @@ class Product(models.Model):
 
 
 class Session(models.Model):
-       name = models.CharField(max_length=150, verbose_name='Nazwa')
-       image = models.ImageField(upload_to='media/photos/', verbose_name='Zdjęcie', null=True, blank=True)
-       film = models.FileField(verbose_name='Film', upload_to='videos_uploaded', null=True, validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])], blank=True)
-       file = models.FileField(validators=[validate_file_extension], verbose_name='Plik tekstowy', null=True, blank=True)
-       product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Produkt')
+          name = models.CharField(max_length=150, verbose_name='Nazwa')
+          image = models.ImageField(upload_to='media/photos/', verbose_name='Zdjęcie')
+          film = models.FileField(verbose_name='Film', upload_to='videos_uploaded', null=True, validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
+          file = models.FileField(validators=[validate_file_extension], verbose_name='Plik tekstowy')
+          product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Produkt')
 
-       created_at = models.DateTimeField(auto_now_add=True)
-       updated_at = models.DateTimeField(auto_now=True)
+          created_at = models.DateTimeField(auto_now_add=True)
+          updated_at = models.DateTimeField(auto_now=True)
 
 
-       class Meta:
-              verbose_name_plural = 'Sesja'
+          class Meta:
+                 verbose_name_plural = 'Sesja'
 
-       def __str__(self):
-              return self.name
+          def __str__(self):
+                  return self.name

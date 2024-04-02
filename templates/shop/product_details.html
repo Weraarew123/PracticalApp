@@ -10,8 +10,8 @@
 	<div class="row no-gutters">
 		<aside class="col-md-6">
 <article class="gallery-wrap"> 
-	<div class="img-big-wrap justify-content-center d-flex">
-	   <img src="{{product.image.url}}" class="mx-auto mt-3">
+	<div class="img-big-wrap">
+	   <img src="{{product.image.url}}">
 	</div> <!-- img-big-wrap.// -->
 	
 </article> <!-- gallery-wrap .end// -->
@@ -21,13 +21,13 @@
 	{% csrf_token %}
 	<article class="content-body">
 
-	<h2 class="title">Nazwa: {{product.name}}</h2>
+	<h2 class="title">{{product.name}}</h2>
 
 	<div class="mb-3"> 
-		<var class="h4" style="color: black">Cena: {{product.price}} zł</var> 
+		<var class="h4" style="color: black">{{product.price}} zł</var> 
 	</div> 
 
-	<p>{{product.description | safe}}</p>
+	<p>{{product.description}}</p>
           {% if sessions is not null %}
           <hr>
           <div class="accordion" id="accordionExample">

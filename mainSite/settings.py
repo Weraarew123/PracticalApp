@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'orders',
-    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -154,10 +153,3 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
-
-AUTHENTICATION_BACKENDS = [
-    'accounts.backends.EmailBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
