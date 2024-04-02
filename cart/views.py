@@ -4,13 +4,7 @@ from .models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
 from products.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
-def _cart_id(request):
-    cart = request.session.session_key
-    if not cart:
-        cart = request.session.create()
-    return cart
+from .utils import _cart_id
 
 class AddCartView(LoginRequiredMixin, View):
     def post(self, request, product_id):
@@ -24,27 +18,15 @@ class AddCartView(LoginRequiredMixin, View):
             )
         cart.save()
     
-        is_cart_item_exists = CartItem.objects.filter(product=product, cart=cart).exists()
-        if is_cart_item_exists:
-            cart_item = CartItem.objects.filter(product=product, cart=cart)
-            cart_item.user = user
-            id =[]
-            for item in cart_item:
-                id.append(item.id)
-        else:
-            cart_item= CartItem.objects.create(
-                product=product,
-                cart = cart,
-                user=user,
-            )
-            cart_item.save()
+        cart_item = CartItem.objects.get_or_create(product=product, cart = cart)
+        cart_item.user = user
         return redirect('cart')
 
 class CartView(LoginRequiredMixin, View):
     def get(self, request, total=0, cart_items=None):
+        tax=0
+        grand_total=0
         try:
-            tax=0
-            grand_total=0
             cart = Cart.objects.get(cart_id=_cart_id(request))
             cart_items = CartItem.objects.filter(cart=cart, is_active=True)
             for cart_item in cart_items:
@@ -64,11 +46,8 @@ class CartView(LoginRequiredMixin, View):
 
 class RemoveCartView(LoginRequiredMixin, View):
     def get(self, request, product_id, cart_item_id):
-        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart = get_object_or_404(Cart, cart_id=_cart_id(request))
         product = get_object_or_404(Product, id=product_id)
-        try:
-            cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
-            cart_item.delete()
-        except CartItem.DoesNotExist:
-            pass
+        cart_item = get_object_or_404(Cart, product=product, cart=cart, id=cart_item_id)
+        cart_item.delete()
         return redirect('cart')
