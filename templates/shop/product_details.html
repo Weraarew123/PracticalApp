@@ -51,7 +51,12 @@
           {% else %}
           <h4>Produkt jest pusty. O szczegóły zapytaj na mail lub pod nr tel.</h4>
           {% endif %}
-		<button type="submit" class="btn btn-light mx-auto border border-black"> <span class="text">Dodaj do koszyka</span></button>
+        {% if user.is_authenticated %}
+		      <button type="submit" class="btn btn-light mx-auto border border-black"> <span class="text">Dodaj do koszyka</span></button>
+        {% else %}
+          <br>
+          <h4>Kupno produktu dostępne po <a href="{% url "login" %}">(zalogowaniu się)</a></h4>
+        {% endif %}
 	</article> <!-- product-info-aside .// -->
 </form>
 		</main> <!-- col.// -->

@@ -12,16 +12,10 @@
                 <div class="col-md-6">
                   <h2 class="banner-title">Witamy na stronie</h2>
                   <p>Tutaj możesz zakupić kursy szkoleniowe Pani Herman</p>
-                  {% if user.is_authenticated %}
                   <div class="btn-wrap">
                     <a href="{% url 'shop' %}" class="btn btn-light btn-medium d-flex align-items-center border border-black shadow-sm" tabindex="0">Przejdź do sklepu <i class="icon icon-arrow-io"></i>
                     </a>
                   </div>
-                  {% else %}
-                  <div class="btn-wrap">
-                    <div class="p-3 mb-2 d-flex align-items-center text-black" tabindex="0">Aby zobaczyć dostępne kursy, proszę się zalogować/zarejestrować</div>
-                  </div>
-                  {% endif %}
                 </div>
               </div>
             </div>
