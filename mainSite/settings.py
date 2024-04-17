@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://ee8b2593fced5c4bf2cad39bb64e9603@sentry.codemakers.com.pl/3",
+    traces_sample_rate=1.0,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

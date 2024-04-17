@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views import View
 from orders.models import OrderProduct
+from django.views.generic.edit import UpdateView
 
 from products.models import Product, Session
 from .forms import EditUserForm, ProductsForm, SessionsForm
@@ -33,7 +34,12 @@ class UsersView(LoginRequiredMixin, View):
         }
         return render(request, 'dashboard/users.html', context)
 
-class EditUserView(LoginRequiredMixin, View):
+class EditUserView(LoginRequiredMixin, UpdateView, View):
+    model = User
+    fields = ['username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions']
+    template_name = "dashboard/edit_user.html"
+    redirect_field_name = "users"
+    """
     def get(self, request, pk):
         user = get_object_or_404(User, pk=pk)
         form = EditUserForm(instance=user)
@@ -48,6 +54,7 @@ class EditUserView(LoginRequiredMixin, View):
             form.save()
             messages.success(request, 'Zmiany zostały zapisane')
             return redirect('users')
+    """
 
 class DeleteUserView(LoginRequiredMixin, View):
     def post(self, request, pk):
