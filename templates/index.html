@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-{% static "images/pobrane.png" as Bground %}
+{% static "images/background.png" as Bground %}
 <section id="billboard" class="overflow-hidden">
     <div class="swiper main-swiper">
       <div class="swiper-wrapper">
@@ -10,7 +10,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-6">
-                  <h2 class="banner-title">Witamy na stronie</h2>
+                  <h2 class="banner-title text-light">Witamy na stronie</h2>
                   <p>Tutaj możesz zakupić kursy szkoleniowe Pani Herman</p>
                   <div class="btn-wrap">
                     <a href="{% url 'shop' %}" class="btn btn-light btn-medium d-flex align-items-center border border-black shadow-sm" tabindex="0">Przejdź do sklepu <i class="icon icon-arrow-io"></i>

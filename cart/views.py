@@ -18,7 +18,7 @@ class AddCartView(LoginRequiredMixin, View):
             )
         cart.save()
     
-        cart_item = CartItem.objects.get_or_create(product=product, cart = cart)
+        cart_item, created = CartItem.objects.get_or_create(product=product, cart = cart)
         cart_item.user = user
         return redirect('cart')
 

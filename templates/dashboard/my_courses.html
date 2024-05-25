@@ -9,9 +9,9 @@
     <!-- Right side content -->
     <div class="col-md-9">
       {% include 'includes/alerts.html' %}
-        <h2>Moje kursy</h2>
+        <h2 class="text-light">Moje kursy</h2>
         {% if orders %}
-        <table class="table table-hover">
+        <table class="table table-hover text-light">
             <thead>
               <tr>
                 <th>#</th>
@@ -28,7 +28,7 @@
             </tbody>
           </table>
           {% else %}
-          <div class="mx-auto text-center"><h5>Nie masz zakupionego ani jednego kursu.</h5> <a href="{% url 'shop' %}">Przejdź do sklepu</a>, aby zamówić kurs.</div>
+          <div class="mx-auto text-center"><h5 class="text-light">Nie masz zakupionego ani jednego kursu.</h5> <a href="{% url 'shop' %}" class="text-primary">Przejdź do sklepu</a>, aby zamówić kurs.</div>
           {% endif %}
     </div>
 </div>

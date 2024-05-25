@@ -4,7 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from cart.models import CartItem
+from cart.models import Cart, CartItem
+from cart.utils import _cart_id
 from products.models import Product
 from .models import Order, OrderProduct, Payment
 
@@ -57,7 +58,9 @@ class OrderView(View):
     def get(self, request, total=0):
         user = request.user
 
-        cart_items = CartItem.objects.filter(user=user)
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        print(cart_items)
         cart_count = cart_items.count()
         if cart_count < 0:
             return redirect('shop')

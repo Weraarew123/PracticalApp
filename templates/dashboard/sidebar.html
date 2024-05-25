@@ -1,12 +1,12 @@
 <div class="col-md-3">
-          <div class="nav flex-column nav-pills bg-light" aria-orientation="vertical">
-              <a href="{% url 'info' %}" class="nav-link text-dark {% if '/info/' in request.path %}bg-dark text-white{% endif %}">Zamówienia</a>
-              <a href="{% url 'user_data' %}" class="nav-link text-dark {% if '/user_data/' in request.path %}bg-dark text-white{% endif %}">Twoje dane</a>
-              <a href="{% url "my_courses" %}" class="nav-link text-dark {% if '/my_courses/' in request.path %}bg-dark text-white{% endif %}">Zakupione kursy</a>
+          <div class="nav flex-column nav-pills bg-dark" aria-orientation="vertical">
+              <a href="{% url 'info' %}" class="nav-link text-light {% if '/info/' in request.path %}bg-light text-dark{% endif %}">Zamówienia</a>
+              <a href="{% url 'user_data' %}" class="nav-link text-light {% if '/user_data/' in request.path %}bg-light text-dark{% endif %}">Twoje dane</a>
+              <a href="{% url "my_courses" %}" class="nav-link text-light {% if '/my_courses/' in request.path %}bg-light text-dark{% endif %}">Zakupione kursy</a>
               {% if user.is_staff %}
-              <a href="{% url 'users' %}" class="nav-link text-dark {% if '/users/' in request.path %}bg-dark text-white{% endif %}">Edytuj użytkowników</a>   
-              <a href="{% url "courses" %}" class="nav-link text-dark {% if '/courses/' in request.path %}bg-dark text-white{% endif %}">Edytuj kursy</a>
+              <a href="{% url 'users' %}" class="nav-link text-light {% if '/users/' in request.path %}bg-light text-dark{% endif %}">Edytuj użytkowników</a>   
+              <a href="{% url "courses" %}" class="nav-link text-light {% if '/courses/' in request.path %}bg-light text-dark{% endif %}">Edytuj kursy</a>
               {% endif %}
-              <a href="{% url 'logout' %}" class="nav-link text-dark">Wyloguj się</a>
+              <a href="{% url 'logout' %}" class="nav-link text-light">Wyloguj się</a>
           </div>
 </div>

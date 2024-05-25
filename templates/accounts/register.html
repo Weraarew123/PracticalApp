@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block content %}
-<section class="section-content padding-y bg-secondary-subtle">
+{% static 'images\background.png' as wallpaper %}
+<section class="section-content padding-y" style="background-image: url("{% static "wallpaper" %}")">
     <!-- ============================ COMPONENT REGISTER   ================================= -->
     <br>
     <div class="card mx-auto rounded-4" style="max-width: 800px; margin-top: 40px; padding: 5px">

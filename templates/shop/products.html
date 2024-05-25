@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-{% static "images/course.jpg" as backG %}
+{% static "images/background.jpg" as backG %}
 <section class="site-banner jarallax min-height300 padding-large" style="background: url('{{backG}}') no-repeat; background-position: top;">
     <div class="container">
       <div class="row">
         <div class="col-md-12"></a>
-          <h1 class="page-title">Dostępne kursy</h1>
+          <h1 class="page-title text-light">Dostępne kursy</h1>
           <div class="breadcrumbs">
             <span class="item">
-              <a href="{% url 'home' %}">Strona główna /</a>
+              <a href="{% url 'home' %}" class="text-light">Strona główna /</a>
             </span>
             <span class="item">Przedmioty</span>
           </div>
@@ -34,7 +34,7 @@
                       <a href="{% url 'product_details' product.pk %}"><img src="..{{product.image.url}}" alt="{{product.name}}" class="product-image"></a>
                     </div>
                     <div class="product-detail">
-                      <h3 class="product-title">
+                      <h3 class="product-title text-light">
                         <a href="{% url 'product_details' product.pk %}">{{product.name}}</a>
                       </h3>
                       <div class="item-price text-primary">{{product.price}}Zł</div>
