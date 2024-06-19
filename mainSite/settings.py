@@ -13,9 +13,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import sentry_sdk
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 sentry_sdk.init(
-    dsn="https://ee8b2593fced5c4bf2cad39bb64e9603@sentry.codemakers.com.pl/3",
+    dsn=os.environ.get('dsn'),
     traces_sample_rate=1.0,
 )
 
@@ -27,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c1@m-qqtfljks_=4y(od&utink800!f&l33=mivo3x3=3f77w*'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,10 +146,10 @@ MESSAGE_TAGS={
     messages.ERROR: 'danger',
 }
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'kursyHerman@gmail.com'
-EMAIL_HOST_PASSWORD = 'ykef ravl qwso wout'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
 MEDIA_URL = '/media/'
